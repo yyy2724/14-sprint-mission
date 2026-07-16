@@ -32,7 +32,7 @@ public abstract class BaseEntity {
         this.createdAt = createdAt;
     }
 
-    public void updateUpdatedAt(Long UpdatedAt){
+    public void updateUpdatedAt(Long updatedAt){
         this.updatedAt = updatedAt;
     }
 }

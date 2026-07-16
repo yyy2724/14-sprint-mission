@@ -4,18 +4,22 @@ package com.sprint.mission;
 import com.sprint.mission.entity.Channel;
 import com.sprint.mission.entity.Message;
 import com.sprint.mission.entity.User;
-import com.sprint.mission.service.ChannelService;
-import com.sprint.mission.service.MessageService;
-import com.sprint.mission.service.UserService;
+import com.sprint.mission.service.BasicService;
+import com.sprint.mission.service.jcf.JCFBasicService;
 import com.sprint.mission.service.jcf.JCFChannelService;
 import com.sprint.mission.service.jcf.JCFMessageService;
 import com.sprint.mission.service.jcf.JCFUserService;
 
 public class JavaApplication {
     public static void main(String[] args) {
-        ChannelService channelService = new JCFChannelService();
-        MessageService messageService = new JCFMessageService();
-        UserService userService = new JCFUserService();
+//        ChannelService channelService = new JCFChannelService();
+//        MessageService messageService = new JCFMessageService();
+//        UserService userService = new JCFUserService();
+
+        BasicService<Channel> channelService = new JCFChannelService<>();
+        BasicService<Message> messageService = new JCFMessageService<>();
+        BasicService<User> userService = new JCFUserService<>();
+
         Channel channel = new Channel("LGU+");
         User user = new User("김양현");
         Message message = new Message("메세지 내용입니다.", user, channel);
