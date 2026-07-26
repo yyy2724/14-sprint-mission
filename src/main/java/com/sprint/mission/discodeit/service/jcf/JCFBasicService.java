@@ -1,8 +1,7 @@
-package com.sprint.mission.service.jcf;
+package com.sprint.mission.discodeit.service.jcf;
 
-import com.sprint.mission.entity.BaseEntity;
-import com.sprint.mission.entity.Channel;
-import com.sprint.mission.service.BasicService;
+import com.sprint.mission.discodeit.entity.BaseEntity;
+import com.sprint.mission.discodeit.service.BasicService;
 
 import java.util.*;
 
@@ -11,15 +10,6 @@ public abstract class JCFBasicService<T extends BaseEntity> implements BasicServ
 
     public JCFBasicService() {
         this.data = new HashMap<>();
-    }
-
-    @Override
-    public void create(T t) {
-        if (data.containsKey(t.getId())) {
-            throw new IllegalArgumentException("해당 값이 이미 존재합니다.");
-        }
-
-        data.put(t.getId(), t);
     }
 
     @Override
