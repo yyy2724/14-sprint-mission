@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.binaryContent.application.basic;
 
 import com.sprint.mission.discodeit.binaryContent.dto.BinaryContentCreateRequestDto;
+import com.sprint.mission.discodeit.binaryContent.dto.BinaryContentDownloadResponse;
 import com.sprint.mission.discodeit.binaryContent.dto.BinaryContentResponseDto;
 import com.sprint.mission.discodeit.binaryContent.domain.BinaryContent;
 import com.sprint.mission.discodeit.common.exception.NoSuchElementException;
@@ -10,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +22,7 @@ public class BasicBinaryContentService implements BinaryContentService {
     private final BinaryContentRepository binaryContentRepository;
 
     @Override
-    public BinaryContentResponseDto create(BinaryContentCreateRequestDto request){
+    public BinaryContentResponseDto create(BinaryContentCreateRequestDto request) {
         MultipartFile file = request.data();
 
         try {
@@ -39,7 +39,7 @@ public class BasicBinaryContentService implements BinaryContentService {
     }
 
     @Override
-    public BinaryContentResponseDto find(UUID id){
+    public BinaryContentResponseDto find(UUID id) {
         BinaryContent binaryContent = binaryContentRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
 
@@ -47,14 +47,14 @@ public class BasicBinaryContentService implements BinaryContentService {
     }
 
     @Override
-    public List<BinaryContentResponseDto> findAllByIdIn(List<UUID> ids){
+    public List<BinaryContentResponseDto> findAllByIdIn(List<UUID> ids) {
         List<BinaryContentResponseDto> response = binaryContentRepository.findAllByIdIn(ids)
                 .stream()
                 .map(BinaryContentResponseDto::from)
                 .toList();
 
         // 비어 있으면 예외 발생
-        if(response.isEmpty()){
+        if (response.isEmpty()) {
             throw new NoSuchElementException();
         }
 
@@ -62,9 +62,20 @@ public class BasicBinaryContentService implements BinaryContentService {
     }
 
     @Override
-    public void delete(UUID id){
+    public void delete(UUID id) {
         BinaryContent binaryContent = binaryContentRepository.findById(id).orElseThrow(NoSuchElementException::new);
         binaryContentRepository.deleteById(binaryContent.getId());
+    }
+
+    @Override
+    public BinaryContentDownloadResponse download(UUID binaryContentId) {
+        BinaryContent binaryContent = binaryContentRepository.findById(binaryContentId)
+                .orElseThrow(NoSuchElementException::new);
+
+        return BinaryContentDownloadResponse.from(binaryContent.getId(),
+                binaryContent.getBytes(), binaryContent.getFileName());
+
+
     }
 
 

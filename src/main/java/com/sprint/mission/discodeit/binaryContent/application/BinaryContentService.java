@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.binaryContent.application;
 
 import com.sprint.mission.discodeit.binaryContent.dto.BinaryContentCreateRequestDto;
+import com.sprint.mission.discodeit.binaryContent.dto.BinaryContentDownloadResponse;
 import com.sprint.mission.discodeit.binaryContent.dto.BinaryContentResponseDto;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface BinaryContentService {
     BinaryContentResponseDto find(UUID id);
     List<BinaryContentResponseDto> findAllByIdIn(List<UUID> ids);
     void delete(UUID id);
+
+    BinaryContentDownloadResponse download(UUID binaryContentId);
 }
